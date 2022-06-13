@@ -20,6 +20,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from '../../data/listItems';
 import Deposits from '../Deposits/Deposits';
 import Orders from '../Orders/Orders';
+import DashboardElement from './DashboardElement/DashboardElement';
 
 function Copyright(props: any) {
   return (
@@ -166,36 +167,19 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                </Paper>
-              </Grid>
+              <DashboardElement xs={12} md={8} lg={9} height={240}>
+
+              </DashboardElement>
               {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Deposits />
-                </Paper>
-              </Grid>
+              <DashboardElement xs={12} md={4} lg={3} height={240}>
+                <Deposits/>
+              </DashboardElement>
+
               {/* Recent Orders */}
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
-                </Paper>
-              </Grid>
+              <DashboardElement xs={12}>
+                <Orders/>
+              </DashboardElement>
+
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
