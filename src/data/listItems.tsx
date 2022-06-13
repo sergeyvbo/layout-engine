@@ -6,13 +6,16 @@ import ListSubheader from '@mui/material/ListSubheader';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import generalMedicalPerscriptive from '../data/generalMedicalPerspective.json';
+import { Resolver } from '@stoplight/json-ref-resolver';
+
+const resolver = new Resolver();
+const data = resolver.resolve(generalMedicalPerscriptive);
 
 export const mainListItems = (
   <React.Fragment>
     {Object.keys(generalMedicalPerscriptive.generalMedicalPerspective.views).map(key => {
-      console.log(key);
       return(
-        <ListItemButton>
+        <ListItemButton key={key}>
           <ListItemIcon>
           <LayersIcon />
           </ListItemIcon>

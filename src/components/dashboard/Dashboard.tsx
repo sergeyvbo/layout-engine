@@ -16,10 +16,15 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from '../../data/listItems';
+import LayersIcon from '@mui/icons-material/Layers';
+// import { mainListItems, secondaryListItems } from '../../data/listItems';
 import Deposits from '../Deposits/Deposits';
 import Orders from '../Orders/Orders';
 import DashboardElement from './DashboardElement/DashboardElement';
+import { fetchData } from '../../lib/utils';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
 
 function Copyright(props: any) {
   return (
@@ -34,7 +39,7 @@ function Copyright(props: any) {
   );
 }
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 320;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -88,9 +93,69 @@ const mdTheme = createTheme();
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+  const [mainListItems, setMainListItems] = React.useState<JSX.Element[] | null>(null);
+  const [secondaryListItems, setSecondaryListItems] = React.useState<JSX.Element[] | null>(null);
+  const [sections, setSections] = React.useState<JSX.Element[] | null>(null);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  React.useEffect(() => {
+    fetchData().then(data => {
+      const mainItems = [];
+      for (const view in data.generalMedicalPerspective.views) {
+        const item = data.generalMedicalPerspective.views[view];
+        mainItems.push(
+          <ListItemButton key={item.id}>
+            <ListItemIcon>
+              <LayersIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.name} />
+          </ListItemButton>
+        );
+      };
+      
+      const secondaryItems = [];
+      const transitions = data.generalMedicalPerspective.views.dashboard.transitions;
+      for (const t of transitions) {
+        const item = t[Object.keys(t)[0]];
+        secondaryItems.push(<ListItemButton key = {item.id}>
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          <ListItemText primary={item.name} />
+        </ListItemButton>  
+        );
+      };
+
+      const sectionItems = [];
+      const sections = data.generalMedicalPerspective.views.dashboard.sections;
+      for (const s in sections) {
+        const item = data.generalMedicalPerspective.views.dashboard.sections[s];
+        console.log(item);
+        const entity: any = item.entity[Object.keys(item.entity)[0]];
+        console.log(entity);
+        sectionItems.push(
+          <DashboardElement xs={12} md={8} lg={9} height={240} key={entity.id}>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
+              {entity.name}
+            </Typography>
+            no data
+          </DashboardElement>
+        );
+      }
+
+      setMainListItems(mainItems);
+      setSecondaryListItems(secondaryItems);
+      setSections(sectionItems);
+
+    })},[]);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -178,6 +243,8 @@ function DashboardContent() {
               <DashboardElement xs={12}>
                 <Orders/>
               </DashboardElement>
+
+              {sections}
 
             </Grid>
             <Copyright sx={{ pt: 4 }} />
