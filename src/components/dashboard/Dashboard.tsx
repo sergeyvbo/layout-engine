@@ -22,8 +22,10 @@ import Deposits from '../Deposits/Deposits';
 import Orders from '../Orders/Orders';
 import DashboardElement from './DashboardElement/DashboardElement';
 import { fetchData } from '../../lib/utils';
-import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemIcon, ListItemText, Modal } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import Title from '../Title/Title';
+import ModalForm from '../ModalForm/ModalForm';
 
 
 function Copyright(props: any) {
@@ -91,14 +93,20 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const [mainListItems, setMainListItems] = React.useState<JSX.Element[] | null>(null);
   const [secondaryListItems, setSecondaryListItems] = React.useState<JSX.Element[] | null>(null);
   const [sections, setSections] = React.useState<JSX.Element[] | null>(null);
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  function toggleModalForm() {
+    setModalOpen(!modalOpen);
+  }
 
   React.useEffect(() => {
     fetchData().then(data => {
@@ -114,18 +122,23 @@ function DashboardContent() {
           </ListItemButton>
         );
       };
-      
+
       const secondaryItems = [];
       const transitions = data.generalMedicalPerspective.views.dashboard.transitions;
       for (const t of transitions) {
+        for (const prop of Object.keys(t)) {
+          const item = t[prop];
+          console.log(prop);
+          secondaryItems.push(<ListItemButton key={item.id} onClick={toggleModalForm}>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary={item.name} />
+          </ListItemButton>
+          );
+
+        }
         const item = t[Object.keys(t)[0]];
-        secondaryItems.push(<ListItemButton key = {item.id}>
-          <ListItemIcon>
-            <AssignmentIcon />
-          </ListItemIcon>
-          <ListItemText primary={item.name} />
-        </ListItemButton>  
-        );
       };
 
       const sectionItems = [];
@@ -137,15 +150,9 @@ function DashboardContent() {
         console.log(entity);
         sectionItems.push(
           <DashboardElement xs={12} md={8} lg={9} height={240} key={entity.id}>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
+            <Title>
               {entity.name}
-            </Typography>
+            </Title>
             no data
           </DashboardElement>
         );
@@ -155,7 +162,8 @@ function DashboardContent() {
       setSecondaryListItems(secondaryItems);
       setSections(sectionItems);
 
-    })},[]);
+    })
+  }, []);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -230,26 +238,25 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
-              <DashboardElement xs={12} md={8} lg={9} height={240}>
-
-              </DashboardElement>
+              {sections}
               {/* Recent Deposits */}
               <DashboardElement xs={12} md={4} lg={3} height={240}>
-                <Deposits/>
+                <Deposits />
               </DashboardElement>
 
               {/* Recent Orders */}
               <DashboardElement xs={12}>
-                <Orders/>
+                <Orders />
               </DashboardElement>
 
-              {sections}
 
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
+        <Modal open={modalOpen} onClick={toggleModalForm}>
+          <ModalForm />
+        </Modal>
       </Box>
     </ThemeProvider>
   );
