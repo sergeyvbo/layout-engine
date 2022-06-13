@@ -1,0 +1,107 @@
+﻿{
+  "generalMedicalPerspective": {
+    "id": 50,
+    "name": "Общий врачебный ракурс",
+    "views": {
+      "dashboard": {
+        "id": 51,
+        "name": "Дашборд",
+        "sections": {
+          "disabilityResume": {
+            "type": "form",
+            "entity": {
+              "disablity": {
+                "$ref": "#/generalMedicalPerspective/domains/medical/entities/disablity"
+              }
+            }
+          }
+        },
+        "transitions": [
+          {
+            "disability": {
+              "$ref": "#/generalMedicalPerspective/views/disability"
+            }
+          },
+          {
+            "dispensaryObservation": {
+              "$ref": "#/generalMedicalPerspective/views/dispensaryObservation"
+            }
+          },
+          {
+            "clinicAttachment": {
+              "$ref": "#/generalMedicalPerspective/views/clinicAttachment"
+            }
+          }
+        ]
+      },
+      "disability": {
+        "id": 52,
+        "name": "Инвалидность",
+        "sections": {
+          "disabilityDetails": {
+            "type": "form",
+            "entity": {
+              "disablity": {
+                "$ref": "#/generalMedicalPerspective/domains/medical/entities/disablity"
+              }
+            }
+          }
+        },
+        "options": [
+          "dialog"
+        ]
+      },
+      "dispensaryObservation": {
+        "id": 53,
+        "name": "Диспансерное наблюдение",
+        "options": [
+          "dialog"
+        ]
+      },
+      "clinicAttachment": {
+        "id": 54,
+        "name": "Прикрепление к поликлинике",
+        "options": [
+          "dialog"
+        ]
+      }
+    },
+    "startView": {
+      "dashboard": {
+        "$ref": "#/generalMedicalPerspective/views/dashboard"
+      }
+    },
+    "layouts": {
+      "mainLayout": {
+        "type": {
+          "id": 258,
+          "name": "Макет",
+          "code": "layout"
+        },
+        "id": 204,
+        "name": "Основной макет"
+      }
+    },
+    "defaultLayout": {
+      "mainLayout": {
+        "$ref": "#/generalMedicalPerspective/layouts/mainLayout"
+      }
+    },
+    "domains": {
+      "medical": {
+        "id": 202,
+        "name": "Медицинские данные",
+        "entities": {
+          "disablity": {
+            "id": 57,
+            "name": "Инвалидность"
+          }
+        }
+      },
+      "personal": {
+        "id": 203,
+        "name": "Персональные данные"
+      }
+    }
+  }
+}
