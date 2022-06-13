@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import Title from "../Title/Title";
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -11,13 +12,16 @@ const style = {
   p: 4,
 };
 
-export default function ModalForm() {
+interface ModalFormProps {
+  title?: string,
+  children?: React.ReactNode;
+}
+
+export default function ModalForm(props: ModalFormProps) {
   return(
     <Box sx={{ ...style, width: 400 }}>
-    <h2 id="parent-modal-title">Text in a modal</h2>
-    <p id="parent-modal-description">
-      modal
-    </p>
+    <Title>{props.title}</Title>
+    {props.children}
   </Box>
   );
 }

@@ -6,12 +6,13 @@ interface DashboardElementProps {
   lg?: boolean | GridSize | undefined,
   height?: number | undefined,
   children?: React.ReactNode;
+  onClick?: any
 
 }
 
 export default function DashboardElement(props: DashboardElementProps) {
   return (
-    <Grid item xs={props.xs} md={props.md} lg={props.lg}>
+    <Grid item xs={props.xs} md={props.md} lg={props.lg} onClick={props.onClick}>
       <Paper
         sx={{
           p: 2,

@@ -100,11 +100,14 @@ function DashboardContent() {
   const [secondaryListItems, setSecondaryListItems] = React.useState<JSX.Element[] | null>(null);
   const [sections, setSections] = React.useState<JSX.Element[] | null>(null);
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [modalFormData, setModalFormData] = React.useState<JSX.Element | null>(null);
+  const [modalFormTitle, setModalFormTitle] = React.useState<string | undefined>(undefined);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  function toggleModalForm() {
+  function toggleModalForm(title?: string | undefined) {
+    setModalFormTitle(title);
     setModalOpen(!modalOpen);
   }
 
@@ -129,7 +132,7 @@ function DashboardContent() {
         for (const prop of Object.keys(t)) {
           const item = t[prop];
           console.log(prop);
-          secondaryItems.push(<ListItemButton key={item.id} onClick={toggleModalForm}>
+          secondaryItems.push(<ListItemButton key={item.id} onClick={() => toggleModalForm(item.name)}>
             <ListItemIcon>
               <AssignmentIcon />
             </ListItemIcon>
@@ -149,7 +152,7 @@ function DashboardContent() {
         const entity: any = item.entity[Object.keys(item.entity)[0]];
         console.log(entity);
         sectionItems.push(
-          <DashboardElement xs={12} md={8} lg={9} height={240} key={entity.id}>
+          <DashboardElement xs={12} md={8} lg={9} height={240} key={entity.id} onClick={() => toggleModalForm(entity.name)}>
             <Title>
               {entity.name}
             </Title>
@@ -218,8 +221,10 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
+            <Typography>views</Typography>
             {mainListItems}
             <Divider sx={{ my: 1 }} />
+            <Typography>transitions</Typography>
             {secondaryListItems}
           </List>
         </Drawer>
@@ -254,8 +259,10 @@ function DashboardContent() {
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
-        <Modal open={modalOpen} onClick={toggleModalForm}>
-          <ModalForm />
+        <Modal open={modalOpen} onClick={() => toggleModalForm(undefined)}>
+          <ModalForm title={modalFormTitle}>
+            no data  
+          </ModalForm>
         </Modal>
       </Box>
     </ThemeProvider>
