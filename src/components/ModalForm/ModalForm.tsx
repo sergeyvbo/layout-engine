@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import Title from "../Title/Title";
+import Title from "../title/Title";
 
 const style = {
   position: 'absolute' as 'absolute',

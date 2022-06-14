@@ -18,14 +18,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import LayersIcon from '@mui/icons-material/Layers';
 // import { mainListItems, secondaryListItems } from '../../data/listItems';
-import Deposits from '../Deposits/Deposits';
-import Orders from '../Orders/Orders';
-import DashboardElement from './DashboardElement/DashboardElement';
+import DashboardElement from './dashboardElement/DashboardElement';
 import { fetchData } from '../../lib/utils';
 import { ListItemButton, ListItemIcon, ListItemText, Modal } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import Title from '../Title/Title';
-import ModalForm from '../ModalForm/ModalForm';
+import Title from '../title/Title';
+import ModalForm from '../modalForm/ModalForm';
 
 
 function Copyright(props: any) {
@@ -244,15 +242,13 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {sections}
-              {/* Recent Deposits */}
-              <DashboardElement xs={12} md={4} lg={3} height={240}>
+              {/* <DashboardElement xs={12} md={4} lg={3} height={240}>
                 <Deposits />
               </DashboardElement>
 
-              {/* Recent Orders */}
               <DashboardElement xs={12}>
                 <Orders />
-              </DashboardElement>
+              </DashboardElement> */}
 
 
             </Grid>
