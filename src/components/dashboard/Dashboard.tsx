@@ -24,6 +24,12 @@ import { ListItemButton, ListItemIcon, ListItemText, Modal } from '@mui/material
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import Title from '../title/Title';
 import ModalForm from '../modalForm/ModalForm';
+import disability from "../../data/disability.json";
+import disabilityPreview from "../../data/disabilityPreview.json";
+import dispanserisationPreview from '../../data/dispanserisationPreview.json';
+import clinicAttachment from '../../data/clinicAttachment.json';
+
+import CardGroup from '../cardGroup/CardGroup';
 
 
 function Copyright(props: any) {
@@ -129,7 +135,6 @@ function DashboardContent() {
       for (const t of transitions) {
         for (const prop of Object.keys(t)) {
           const item = t[prop];
-          console.log(prop);
           secondaryItems.push(<ListItemButton key={item.id} onClick={() => toggleModalForm(item.name)}>
             <ListItemIcon>
               <AssignmentIcon />
@@ -146,18 +151,35 @@ function DashboardContent() {
       const sections = data.generalMedicalPerspective.views.dashboard.sections;
       for (const s in sections) {
         const item = data.generalMedicalPerspective.views.dashboard.sections[s];
-        console.log(item);
-        const entity: any = item.entity[Object.keys(item.entity)[0]];
-        console.log(entity);
-        sectionItems.push(
-          <DashboardElement xs={12} md={8} lg={9} height={240} key={entity.id} onClick={() => toggleModalForm(entity.name)}>
-            <Title>
-              {entity.name}
-            </Title>
-            no data
-          </DashboardElement>
-        );
+        const entityName = Object.keys(item.entity)[0];
+        const entity: any = item.entity[entityName];
+        if (entityName == 'disablity') {
+          sectionItems.push(
+            <DashboardElement xs={12} md={8} lg={3} height={240} key={entity.id} onClick={() => toggleModalForm(entityName)}>
+              <CardGroup title={disabilityPreview.title} items={disabilityPreview.items}/>
+            </DashboardElement>
+          );
+        } else {
+          sectionItems.push(
+            <DashboardElement xs={12} md={8} lg={9} height={240} key={entity.id} onClick={() => toggleModalForm(entity.name)}>
+              <Title>
+                {entity.name}
+              </Title>
+              no data
+            </DashboardElement>
+          );
+        }
       }
+      sectionItems.push(
+        <DashboardElement xs={12} md={8} lg={3} height={240} key={'dispanserisation'} onClick={() => toggleModalForm('dispanserisation')}>
+          <CardGroup title={dispanserisationPreview.title} items={dispanserisationPreview.items}/>
+        </DashboardElement>
+      );
+      sectionItems.push(
+        <DashboardElement xs={12} md={8} lg={3} height={240} key={'clinicAttachment'} onClick={() => toggleModalForm('clinicAttachment')}>
+          <CardGroup title={clinicAttachment.title} items={clinicAttachment.items}/>
+        </DashboardElement>
+      );
 
       setMainListItems(mainItems);
       setSecondaryListItems(secondaryItems);
@@ -165,6 +187,15 @@ function DashboardContent() {
 
     })
   }, []);
+
+  function modalFormItems(title: string|undefined) {
+    if (title == 'disablity') {
+      return (
+        <CardGroup title={title} items={disability.items}/>
+      );
+    }
+    return <p>{title}</p>;
+  }
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -257,7 +288,7 @@ function DashboardContent() {
         </Box>
         <Modal open={modalOpen} onClick={() => toggleModalForm(undefined)}>
           <ModalForm title={modalFormTitle}>
-            no data  
+            {modalFormItems(modalFormTitle)}
           </ModalForm>
         </Modal>
       </Box>

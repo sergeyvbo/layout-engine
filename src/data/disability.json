@@ -1,0 +1,15 @@
+{
+  "title": "Инвалидность",
+  "items": [
+    {"data":{"header": "Диагноз", "content": "Дыхательная Астма (J45.1)"}, "metadata":{"xs": 4}},
+    {"data":{"header": "Тип", "content": "Приобретенная"}, "metadata":{"xs": 4}},
+    {"data":{"header": "Причина", "content": "Профзаболевание"}, "metadata":{"xs": 4}},
+    {"data":{"header": "Группа инвалидности", "content": "1 группа"}, "metadata":{"xs": 4}},
+    {"data":{"header": "Тип установления", "content": "Повторно"}, "metadata":{"xs": 4}},
+    {"data":{"header": "Статус", "content": "Действующая"}, "metadata":{"xs": 4}},
+    {"data":{"header": "Дата присвоения", "content": "23.08.1998"}, "metadata":{"xs": 3}},
+    {"data":{"header": "Дата освидетельствования", "content": "24.04.2020"}, "metadata":{"xs": 3}},
+    {"data":{"header": "Степень инвалидности", "content": "2 степень"}, "metadata":{"xs": 3}},
+    {"data":{"header": "Установлена по", "content": "23.04.2023"}, "metadata":{"xs": 3}}
+  ]
+}

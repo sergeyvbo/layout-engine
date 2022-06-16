@@ -6,7 +6,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 600,
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 4,
@@ -19,7 +19,7 @@ interface ModalFormProps {
 
 export default function ModalForm(props: ModalFormProps) {
   return(
-    <Box sx={{ ...style, width: 400 }}>
+    <Box sx={{ ...style, width: 600 }}>
     <Title>{props.title}</Title>
     {props.children}
   </Box>
